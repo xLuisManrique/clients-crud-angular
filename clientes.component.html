@@ -1,0 +1,47 @@
+<div class="card border-primary mb-3" >
+        <div class="card-body text-primary">
+            <h1>List Clients</h1>
+            <p class="lead text-black-50 ">This page shows a CRUD from a request made to a Rest API implemented by LUMAN Developer in Springboot with MySQL.
+            <p>contact me for more information about the code source.</p>
+            <div class="my-2 text-left">
+                <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/clientes/form']">
+                  Crear Cliente
+                </button>
+              </div>
+
+              <div *ngIf="clientes?.length == 0" class="alert alert-info">No hay registros</div>
+              
+            <table class="table table-bordered table-hover" *ngIf="clientes?.length>0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>NOMBRE</th>
+                        <th>APELLIDO</th>
+                        <th>EMAIL</th>
+                        <th>PHONE</th>
+                        <th>CREATE DATE</th>
+                        <th>EDIT</th>
+                        <th>DELETE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cliente of clientes | paginate: { itemsPerPage: 9, currentPage: page}">
+                        <td>{{cliente.id}}</td>
+                        <td>{{cliente.nombre}}</td>
+                        <td>{{ cliente.apellido}}</td>
+                        <td>{{ cliente.email}}</td>
+                        <td>{{ cliente.phone}}</td>
+                        <td>{{ cliente.createAt}}</td>
+                        <td>
+                        <button type="button" name="editar" [routerLink]="['/clientes/form', cliente.id]" class="btn btn-primary btn-sm">EDIT</button>
+                        </td>
+                        <td>
+                        <button type="button" name="eliminar" (click)='delete(cliente)' class="btn btn-danger btn-sm">DELETE</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+</div>
+
+<pagination-controls (pageChange)="page = $event" previousLabel="Back" nextLabel="Next"></pagination-controls>
